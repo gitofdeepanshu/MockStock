@@ -26,11 +26,12 @@ class User(UserMixin, db.Model):
     stocks = association_proxy('stock_items', 'stock',
                                creator=lambda v: StockItem(stock=v))
 
-    def __init__(self, username, email, member1=None, member2=None):
+    def __init__(self, username, email, member1=None, member2=None, money=5000):
         self.username = username
         self.email = email
         self.member1 = member1
         self.member2 = member2
+        self.money = money
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
