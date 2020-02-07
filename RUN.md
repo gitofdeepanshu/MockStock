@@ -1,4 +1,5 @@
 # Configure App
+Install the required packages `pip install -r requirements.txt`
 - ## Database :-
     - `flask db upgrade`
 - ## Run App :-
