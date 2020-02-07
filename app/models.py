@@ -60,7 +60,7 @@ class User(UserMixin, db.Model):
     def remove_stock(self, stock):
         stk_item = self.has_purchased(stock)
         if stk_item:
-            db.session.remove(stk_item)
+            db.session.delete(stk_item)
 
 
     def add_stock(self, stock, quantity=1):
