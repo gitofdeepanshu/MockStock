@@ -61,8 +61,10 @@ class Stock(db.Model):
     __tablename__ = "stock"
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), unique=True)
     symbol = db.Column(db.String(5), unique=True)
-    name = db.Column(db.String(30))
+    region = db.Column(db.String(20))
+    type = db.Column(db.String(25))
     price = db.Column(db.Numeric(13, 2))
 
     def __repr__(self):
