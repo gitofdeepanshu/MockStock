@@ -109,6 +109,12 @@ class Stock(db.Model):
     def __repr__(self):
         return f"Stock<{self.symbol}>"
 
+    def __init__(self, name, price, region=None, type=None):
+        self.name = name
+        self.price = price
+        self.region = region
+        self.type = type
+
 
 class StockItem(db.Model):
     __tablename__ = "stockitem"
