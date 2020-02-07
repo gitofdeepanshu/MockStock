@@ -66,7 +66,7 @@ class Stock(db.Model):
     price = db.Column(db.Numeric(13, 2))
 
     def __repr__(self):
-        print(f"Stock<{self.symbol}>")
+        return f"Stock<{self.symbol}>"
 
 
 class StockItem(db.Model):
