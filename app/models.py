@@ -79,7 +79,12 @@ class StockItem(db.Model):
 
     user = db.relationship(User, backref=db.backref(
         "stock_items",
-        cascade="all, delete-orphan",)
+        cascade="all, delete-orphan",
+        lazy='dynamic')
     )
 
     stock = db.relationship("Stock")
+
+    def __init__(self, stock, quantity=1):
+        self.stock = stock
+        self.quantity = quantity
