@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     member1 = db.Column(db.String(64))
     member2 = db.Column(db.String(64))
+    money = db.Column(db.Numeric(13, 2))
     password_hash = db.Column(db.String(128))
 
     session_token = db.Column(db.String(32), index=True, unique=True)
@@ -50,6 +51,43 @@ class User(UserMixin, db.Model):
 
     def get_auth_session_token(self):
         return self.session_token
+
+    def has_purchased(self, stock):
+        stk_item = self.stock_items.filter_by(stock=stock).first()
+        return stk_item
+
+    def remove_stock(self, stock):
+        stk_item = self.has_purchased(stock)
+        if stk_item:
+            db.session.remove(stk_item)
+
+
+    def add_stock(self, stock, quantity=1):
+        """
+        Add the stock and if already added then update it.
+        Also updates the User.money to reflect the transaction.
+        Return False when,
+            - Money is insufficient
+            - Removing More stock than available
+        """
+        stk_item = self.has_purchased(stock)
+        if stk_item:
+            new_qt = stk_item.quantity + quantity
+            if quantity * stock.price <= self.money and new_qt >= 0:
+                stk_item.quantity = new_qt
+                self.money -= quantity * stock.price
+                if new_qt == 0:
+                    self.remove_stock(stock)
+            else:
+                return False            
+        else:
+            if quantity > 0 and quantity * stock.price <= self.money:
+                stk_item = StockItem(stock, quantity)
+                self.stock_items.append(stk_item)
+                self.money -= quantity * stock.price
+            else:
+                return False
+        return True
 
 
 @login.user_loader
