@@ -31,6 +31,10 @@ def create_app(config_class=Config):
     db.init_app(app)
     login.init_app(app)
 
+     # For alembic SQLite bug - https://github.com/miguelgrinberg/Flask-Migrate/issues/61  
+    is_sqlite = app.config.get('SQLALCHEMY_DATABASE_URI', '').startswith('sqlite:')
+    migrate.init_app(app, db, render_as_batch=is_sqlite)
+
     # from app.errors import bp as errors_bp
     # app.register_blueprint(errors_bp)
 
