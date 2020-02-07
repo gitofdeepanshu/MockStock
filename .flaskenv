@@ -1,0 +1,2 @@
+FLASK_APP=mockstock.py
+FLASK_ENV=development

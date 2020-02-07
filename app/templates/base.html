@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>
+        {% block title %}
+        {% if title %}{{ title }} | MockStock{% else %} Welcome to MockStock {% endif %}
+        {% endblock %}
+    </title>
+
+    {% block headstyle %}
+    <link rel="icon" type="image/png" sizes="960x960" href="{{ url_for('static',filename = 'img/e-cell.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    {% endblock %}
+
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    
+    {% block navbar %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+
+    {% block footer %}
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    {% endblock %}
+
+    {% endblock %}
+</body>
+</html>

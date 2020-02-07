@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block headstyle %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="{{ url_for('static',filename = 'css/login_register.min.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="login-dark">
+    
+        <!-- Start: Login Form Dark -->
+    <div class="login-dark">
+        <form class="text-dark shadow-lg" method="post" target="_self">
+            {{ form.csrf_token }}
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger text-dark" role="alert" id="login-alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><span>{{ message }}</span></div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+        <div class="illustration"><img class="img-fluid" id="ecell-logo" src="{{ url_for('static', filename='img/e-cell.png') }}"></div>
+        <div class="form-group"><input class="shadow-sm form-control" type="email" name="email" placeholder="Email" autofocus="" autocomplete="on" minlength="4" required=""></div>
+        <div class="form-group"><input class="shadow-sm form-control" type="password" name="password" placeholder="Password" required="" minlength="6"></div>
+        <div class="form-group">
+                <div class="form-check"><input class="form-check-input" name="remember_me" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Remeber Me</label></div>
+        </div>
+        <div class="form-group"><button class="btn btn-primary btn-block" type="submit" name="submit">Log In</button></div><a id="register-link" class="forgot" href="{{url_for('auth.register')}}">Register</a><a class="forgot" href="#">Forgot your email or password?</a></form>
+    </div>
+    <!-- End: Login Form Dark -->
+</div>
+{% endblock %}

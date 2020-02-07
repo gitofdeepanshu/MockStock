@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block headstyle %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login_register.min.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<!-- Start: Registration Form with Photo -->
+<div class="register-photo">
+    <!-- Start: Form Container -->
+    <div class="form-container">
+        <!-- Start: Image -->
+        <div class="image-holder" style="background-image: url(&quot;{{ url_for('static', filename='img/Register.jpg') }}&quot;);opacity: 0.91;">
+        </div>
+        <!-- End: Image -->
+        <form method="post" style="background-color: rgba(70,52,80,0.99);opacity: 0.99;">
+            {{ form.csrf_token }}
+            <h2 class="text-center text-light"><strong>Register</strong> your Team.</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success" role="alert"
+                            style="background-color: rgba(144,254,93,0.74);border-width: 0px;color: #ffffff;"><button type="button"
+                                class="close" data-dismiss="alert" aria-label="Close" style="color: #430000;"><span
+                                    aria-hidden="true">×</span></button><span><strong>{{ message }}</strong></span></div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+
+            <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" required="" minlength="4">
+                {% if form.email.errors %}     
+                    <div class="alert alert-danger" role="alert" style="font-size: 13px;padding: 5px 10px;border: 0px;border-radius: 0rem 0rem .25rem .25rem;background-color: rgba(197,27,27,0.87);color: #ffffff;">
+                        <span>{{ form.email.errors[0] }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Team Name" required="" minlength="4">
+                {% if form.username.errors %}     
+                    <div class="alert alert-danger" role="alert" style="font-size: 13px;padding: 5px 10px;border: 0px;border-radius: 0rem 0rem .25rem .25rem;background-color: rgba(197,27,27,0.87);color: #ffffff;">
+                        <span>{{ form.username.errors[0] }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group d-flex"><input class="form-control" name="member1" type="text" placeholder="Member 1" required=""
+                    minlength="4"><input class="form-control" name="member2" type="text" placeholder="Member 2" required=""
+                    minlength="4" style="margin-left: 10px;"></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group"><input class="form-control" type="password" name="password_repeat"
+                placeholder="Password (repeat)">
+                {% if form.password_repeat.errors %}     
+                    <div class="alert alert-danger" role="alert" style="font-size: 13px;padding: 5px 10px;border: 0px;border-radius: 0rem 0rem .25rem .25rem;background-color: rgba(197,27,27,0.87);color: #ffffff;">
+                        <span>{{ form.password_repeat.errors[0] }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <div class="form-check"><label class="form-check-label text-light"><input class="form-check-input"
+                            type="checkbox">I agree to the license terms.</label></div>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign Up</button></div><a
+                class="already" href="{{url_for('auth.login')}}">You already have an account? Login here.</a>
+        </form>
+    </div>
+    <!-- End: Form Container -->
+</div>
+<!-- End: Registration Form with Photo -->
+{% endblock %}
