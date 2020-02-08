@@ -1,0 +1,24 @@
+{% import 'macros/stockitem.html' as stk %}
+{% extends "base.html" %}
+
+{% block headstyle %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename = 'css/card_grid.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Start: 1 Row 4 Columns -->
+<div>
+    <div class="container">
+        <div class="row">
+            {% for stock in stocks %}
+                {{ stk.render_stock_card(stock) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- End: 1 Row 4 Columns -->
+
+{% endblock %}
