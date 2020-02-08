@@ -1,5 +1,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
+  background: url(../../static/img/market.jpg) no-repeat center center fixed;
+  /* url(../../assets/img/elsetge.cat_analytics-wallpaper_1606133..jpg) no-repeat center center fixed;: cover; */
 }
 
 @media (max-width: 700px) {
