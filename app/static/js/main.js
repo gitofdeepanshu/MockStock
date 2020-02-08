@@ -15,10 +15,11 @@ $.fn.log = function (...args) {
 
 function submitStock() {
     stocks = {}
-    if (Object.keys(mocstock.stocks).length) {
-        Object.keys(mocstock.stocks).forEach(key => {
-            if (mocstock.stocks[key] > 0) {
-                stocks[key] = mocstock.stocks[key]
+    if (Object.keys(mocstock.change_stocks).length) {
+        Object.keys(mocstock.change_stocks).forEach(key => {
+            if (mocstock.change_stocks[key] != 0) {
+                stocks[key] = mocstock.change_stocks[key]
+                mocstock.change_stocks[key] = 0
             }
         });
     }
@@ -26,8 +27,9 @@ function submitStock() {
         data = {
             stocks: stocks
         }
-        asyncAjaxJSON(data, 'api/update_stocks', 'POST')
+        asyncAjaxJSON(data, 'api/update_user_stock', 'POST')
     } else {
+        log(stocks)
         log('No stock purchased')
     }
 }
@@ -64,6 +66,8 @@ function handleStockClick(id, price, quantity) {
         if (mocstock.money >= price * quantity) {
             mocstock.money -= price * quantity
             mocstock.stocks[id] += quantity
+            mocstock.change_stocks[id] += quantity
+
             $('#total_money').text(mocstock.money)
             $(`#stock${id}count`).text(mocstock.stocks[id])
         }
@@ -82,7 +86,8 @@ function createOnclicks(suffix = "addbtn") {
             let stock_id = this['id'].replace("stock", "").replace(suffix, "")
             let price = parseFloat($(`[id ^=stock${stock_id}price]`).text().replace('₹', ''))
             let quantity = (suffix == "addbtn") ? 1 : -1
-            mocstock.stocks[stock_id] = 0
+            mocstock.stocks[stock_id] = parseInt($(`#stock${stock_id}count`).text())
+            mocstock.change_stocks[stock_id] = 0
             $(this).click(() => { handleStockClick(stock_id, price, quantity) })
         }
     );
@@ -91,6 +96,7 @@ function createOnclicks(suffix = "addbtn") {
 $(document).ready(function () {
     mocstock.money = parseFloat($('#total_money').text());
     mocstock.stocks = {}
+    mocstock.change_stocks = {}
     createOnclicks("addbtn")
     createOnclicks("subbtn")
 });

@@ -63,8 +63,8 @@ document.getElementById("demo").innerHTML = "EXPIRED";
 <div class="stock-main-container">
     <div class="container">
         <div class="row">
-            {% for stock in stocks %}
-                {{ render_stock_card(stock) }}
+            {% for stock_item in stocks %}
+                {{ render_stock_card(stock_item) }}
             {% endfor %}
         </div>
     </div>
