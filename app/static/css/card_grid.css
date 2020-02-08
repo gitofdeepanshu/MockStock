@@ -7,6 +7,7 @@ body {
 @media (max-width: 700px) {
   .col-md-4.stock-items {
     margin-bottom: 10px;
+    padding-bottom: 10px;
   }
 }
 
@@ -17,7 +18,7 @@ body {
 }
 
 .stock-main-container {
-  margin-top: 100px;
+  margin-top: 0px;
 }
 
 .badge.badge-primary.stock-price {
