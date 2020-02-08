@@ -95,6 +95,9 @@ a, .button {
     text-decoration: none;
   }
   
+  .blue-btn {
+    background-color: rgb(13, 133, 231);
+  }
   
 
   
