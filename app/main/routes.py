@@ -11,6 +11,6 @@ from app.main import bp
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 # @login_required
-def index():
+def index():  
     return render_template('main/index.html', stocks=Stock.query.all())
 

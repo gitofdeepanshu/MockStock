@@ -1,4 +1,4 @@
-{% import 'macros/stockitem.html' as stk %}
+{% from 'macros/stockitem.html' import render_stock_card with context %}
 {% extends "base.html" %}
 
 {% block headstyle %}
@@ -62,7 +62,7 @@ document.getElementById("demo").innerHTML = "EXPIRED";
     <div class="container">
         <div class="row">
             {% for stock in stocks %}
-                {{ stk.render_stock_card(stock) }}
+                {{ render_stock_card(stock) }}
             {% endfor %}
         </div>
     </div>
