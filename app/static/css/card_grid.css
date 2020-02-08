@@ -5,15 +5,19 @@ body {
 }
 
 @media (max-width: 700px) {
-  .col-md-3.stock-items {
+  .col-md-4.stock-items {
     margin-bottom: 10px;
   }
 }
 
 @media (min-width: 700px) {
-  .col-md-3.stock-items {
+  .col-md-4.stock-items {
     margin-bottom: 30px;
   }
+}
+
+.stock-main-container {
+  margin-top: 100px;
 }
 
 .badge.badge-primary.stock-price {
@@ -32,7 +36,8 @@ body {
   color: black;
 }
 
-.d-flex.stock-footer {
+.stock-footer {
   margin: 15px 0px 0px 0px;
+  border: 0px;
 }
 
