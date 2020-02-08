@@ -16,9 +16,12 @@ body {
     margin-bottom: 30px;
   }
 }
-
+ 
+@media (min-width: 700px){
 .stock-main-container {
   margin-top: 0px;
+  margin-left: 75px;
+}
 }
 
 .badge.badge-primary.stock-price {

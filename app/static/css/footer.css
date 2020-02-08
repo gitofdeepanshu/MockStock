@@ -109,7 +109,7 @@ a, .button {
   
   #promo {
     text-align: center;
-    padding: 40px;
+    padding-top: 40px;
     /*background: url(../../assets/img/elsetge.cat_analytics-wallpaper_1606133..jpg) no-repeat;*/
   }
   
@@ -133,8 +133,8 @@ a, .button {
   
   .container.site-section {
     text-align: center;
-    padding: 60px 0;
-    margin-bottom: 30px;
+    padding: 40px 0;
+    /* margin-bottom: 30px; */
     font-size: 20px;
   }
   
@@ -144,6 +144,7 @@ a, .button {
   
   .row.items-row {
     padding: 10px;
+    padding-left: 10px;;
   }
   
   
