@@ -20,7 +20,9 @@
     <div class="container site-section" style="margin-top: 36px;">
         <h1>Welcome to Mockstock</h1>
         <p>this is mockstock's paragraph . We will add more info very soon.</p>
-        <h2>Money Left <span class="badge badge-secondary">New</span></h2>
+        {% if current_user.is_authenticated %}
+            <h2>Money Left <span class="badge badge-secondary" id="total_money">{{ current_user.money }}</span></h2>
+        {% endif %}
         <!-- Display the countdown timer in an element -->
 <p id="demo"></p>
 
@@ -73,4 +75,10 @@ document.getElementById("demo").innerHTML = "EXPIRED";
 
 {% block footer %}
 {% include 'components/footer.html' %}
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 {% endblock %}
