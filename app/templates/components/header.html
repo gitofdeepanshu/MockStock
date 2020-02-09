@@ -8,7 +8,12 @@
                     <li><button type="button" class="btn btn-primary blue-btn" data-toggle="modal" data-target="#exampleModalScrollable">
                         ANNOUCEMENTS
                       </button></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#"><strong>&nbsp;SIGNOUT</strong></a></li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('auth.logout')}}"><strong>&nbsp;SIGNOUT</strong></a></li>
+                    {% else %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('auth.login')}}"><strong>&nbsp;SIGN IN</strong></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('auth.register')}}"><strong>&nbsp;REGISTER</strong></a></li>
+                    {% endif %}
                    
                 </ul>
                 
@@ -27,7 +32,7 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+          No Rumors for Now
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary blue-btn" data-dismiss="modal">Close</button>

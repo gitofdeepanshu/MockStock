@@ -12,6 +12,51 @@ $.fn.log = function (...args) {
     return this;
 }
 
+$.fn.extend({
+    disable: function (state) {
+        return this.each(function () {
+            this.disabled = state;
+        });
+    }
+});
+
+
+function setAlert(title, message, error = false, timeout = 3000) {
+    let alert = $("#submit-alert")
+    alert.find('#alert-message').text(message)
+    alert.find('#alert-label').text(title)
+    if (error) {
+        alert.removeClass('alert-success').addClass('alert-danger')
+        // alert.find('#alert-label').text('Error')
+    } else {
+        alert.removeClass('alert-danger').addClass('alert-success')
+        // alert.find('#alert-label').text('Success')
+    }
+
+    alert.slideDown()
+
+    // if (timeout > 0) {
+    //     setInterval(() => {
+    //         alert.slideUp()
+    //     }, timeout);
+    // }
+}
+
+function disableStockBtns(state = true) {
+    log('Disabling Buttons')
+    $('[id ^=stock][id $=subbtn]').disable(state)
+    $('[id ^=stock][id $=addbtn]').disable(state)
+    $("#submit-btn").prop('disabled', state);
+}
+
+
+function errorCallback() {
+    setAlert("Error", "Unable to process transaction", true)
+}
+
+function sucessCallback() {
+    setAlert("Success", "Transactions processed", false)
+}
 
 function submitStock() {
     stocks = {}
@@ -27,16 +72,28 @@ function submitStock() {
         data = {
             stocks: stocks
         }
-        asyncAjaxJSON(data, 'api/update_user_stock', 'POST')
+        asyncAjaxJSON(data,
+            'api/update_user_stock',
+            'POST',
+            function () {
+                disableStockBtns();
+                $('#submit-spinner').toggleClass('d-none');
+            },
+            () => {
+                disableStockBtns(false);
+                $('#submit-spinner').toggleClass('d-none');
+            },
+            sucessCallback,
+            errorCallback
+        )
     } else {
-        log(stocks)
-        log('No stock purchased')
+        setAlert("", "No Transaction Performed", true)
     }
 }
 
 
 //Ajax Handling functions
-function asyncAjaxJSON(payload, target, method, before, complete, sucess, error, metaData) {
+function asyncAjaxJSON(payload, target, method, before, complete, success, error, metaData) {
     log('AJAX[%s] request to %s with payload %o and metaData %o', method, target, payload, metaData);
     $.ajax({
         url: target,
@@ -44,16 +101,16 @@ function asyncAjaxJSON(payload, target, method, before, complete, sucess, error,
         data: JSON.stringify(payload),
         dataType: "json",
         contentType: "application/json",
-        // beforeSend: before(metaData),
-        // complete: complete(metaData),
+        beforeSend: before(metaData),
+        complete: complete(metaData),
 
-        // success: function (data) {
-        //     sucess(data, metaData)
-        // },
+        success: function (data) {
+            success(data, metaData)
+        },
 
-        // error: function (jqXHR, textStatus, errorThrown) {
-        //     error(textStatus, errorThrown, metaData, jqXHR)
-        // }
+        error: function (jqXHR, textStatus, errorThrown) {
+            error(textStatus, errorThrown, metaData, jqXHR)
+        }
 
     });
 }
@@ -91,9 +148,14 @@ function createOnclicks(suffix = "addbtn") {
             $(this).click(() => { handleStockClick(stock_id, price, quantity) })
         }
     );
+    $('#submit-btn').click(() => {
+        submitStock()
+    });
+
 }
 
 $(document).ready(function () {
+    $('#submit-spinner').toggleClass('d-none');
     mocstock.money = parseFloat($('#total_money').text());
     mocstock.stocks = {}
     mocstock.change_stocks = {}
